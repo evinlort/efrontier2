@@ -5,12 +5,13 @@ from custom_websocket import CustomWebSocket
 
 class FTX(CustomWebSocket):
     def __init__(self):
-        url = "wss://ftx.com/ws/"
-        subscribe_message = {"channel": "orderbook", "market": "BTC-PERP", "op": "subscribe"}
-        super(FTX, self).__init__(url, subscribe_message)
+        super(FTX, self).__init__()
+        self.url = "wss://ftx.com/ws/"
+        self.subscribe_message = {"channel": "orderbook", "market": "BTC-PERP", "op": "subscribe"}
+        self.connect()
 
     def receiver(self):
-        gen = super(FTX, self).receive()
+        gen = self.receive()
         while resp := next(gen):
             resp = self.get_relevant_data(resp)
             self.saver.save(self.format_data(resp))

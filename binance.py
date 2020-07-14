@@ -3,12 +3,13 @@ from custom_websocket import CustomWebSocket
 
 class Binance(CustomWebSocket):
     def __init__(self):
-        url = "wss://fstream.binance.com/ws/btcusdt"
-        subscribe_message = {"method": "SUBSCRIBE", "params": ["btcusdt@bookTicker"], "id": 1}
-        super(Binance, self).__init__(url, subscribe_message)
+        super(Binance, self).__init__()
+        self.url = "wss://fstream.binance.com/ws/btcusdt"
+        self.subscribe_message = {"method": "SUBSCRIBE", "params": ["btcusdt@bookTicker"], "id": 1}
+        self.connect()
 
     def receiver(self):
-        gen = super(Binance, self).receive()
+        gen = self.receive()
         while resp := next(gen):
             self.saver.save(self.format_data(resp))
 

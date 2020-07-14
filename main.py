@@ -18,7 +18,7 @@ if __name__ == "__main__":
     t1 = threading.Thread(target=ftx)
     t2 = threading.Thread(target=binance)
     t1.start()
-    t2.start()
+    # t2.start()
     try:
         pass
     except KeyboardInterrupt:
