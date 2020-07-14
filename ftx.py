@@ -9,10 +9,10 @@ class FTX(CustomWebSocket):
         self.url = "wss://ftx.com/ws/"
         self.subscribe_message = {"channel": "orderbook", "market": "BTC-PERP", "op": "subscribe"}
         self.connect()
+        self.receiver()
 
     def receiver(self):
-        gen = self.receive()
-        while resp := next(gen):
+        for resp in self.receive():
             resp = self.get_relevant_data(resp)
             self.saver.save(self.format_data(resp))
 

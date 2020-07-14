@@ -10,7 +10,7 @@ class Saver:
 
     def __init__(self):
         self.saved = []
-        self.is_printable = True
+        self.is_printable = False
 
     def save(self, message):
         lock = threading.Lock()

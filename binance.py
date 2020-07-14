@@ -7,10 +7,10 @@ class Binance(CustomWebSocket):
         self.url = "wss://fstream.binance.com/ws/btcusdt"
         self.subscribe_message = {"method": "SUBSCRIBE", "params": ["btcusdt@bookTicker"], "id": 1}
         self.connect()
+        self.receiver()
 
     def receiver(self):
-        gen = self.receive()
-        while resp := next(gen):
+        for resp in self.receive():
             self.saver.save(self.format_data(resp))
 
     def format_data(self, data):
